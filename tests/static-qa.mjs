@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 
-const VERSION = "0.2.3";
+const VERSION = "0.2.4";
 const files = Object.fromEntries(await Promise.all(
   ["index.html", "app.js", "sw.js", "styles.css", "manifest.webmanifest", "templates/ai-consultant/template.json"]
     .map(async (path) => [path, await readFile(new URL(`../${path}`, import.meta.url), "utf8")])
@@ -31,6 +31,7 @@ check(files["index.html"].includes('id="motionToggle"'), "首頁缺少動態效�
 check(files["app.js"].includes("MOTION_KEY"), "動態效果偏好必須保留在本機");
 check(files["styles.css"].includes("prefers-reduced-motion"), "樣式必須支援系統減少動態效果偏好");
 check(files["app.js"].includes("READING_SOURCE_PREFIX"), "閱讀器教材來源必須只保留在本機");
+check(files["app.js"].includes("READING_SOURCE_PARAM"), "閱讀器必須支援一次性私人教材設定連結");
 check(files["app.js"].includes("drive.google.com/file/d/"), "閱讀器必須支援 Google Drive PDF 預覽");
 check(files["styles.css"].includes("mission-reading-layout"), "閱讀器缺少 Fold 雙欄版面規則");
 

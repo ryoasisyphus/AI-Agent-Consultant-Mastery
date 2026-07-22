@@ -1,6 +1,7 @@
 const STORAGE_KEY = "learning-os:ai-consultant:v1";
 const MOTION_KEY = "learning-os:motion-reduced";
 const READING_SOURCE_PREFIX = "learning-os:reading-source:";
+const READING_SOURCE_PARAM = "readingSource";
 const defaultState = { xp: 0, minutes: 0, completed: [], sessions: [], reflections: [], review: [], answers: [] };
 let template, state;
 
@@ -185,7 +186,7 @@ function setMotionPreference(reduced) {
 
 async function init() {
   try {
-    template = await fetch("templates/ai-consultant/template.json?v=0.2.3").then((response) => {
+    template = await fetch("templates/ai-consultant/template.json?v=0.2.4").then((response) => {
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       return response.json();
     });
@@ -194,6 +195,13 @@ async function init() {
     return;
   }
   state = load(); render();
+  const sourceFromUrl = new URLSearchParams(window.location.search).get(READING_SOURCE_PARAM);
+  if (/^[a-zA-Z0-9_-]{10,}$/.test(sourceFromUrl || "")) {
+    saveReadingSource(template.id, sourceFromUrl);
+    const url = new URL(window.location.href);
+    url.searchParams.delete(READING_SOURCE_PARAM);
+    window.history.replaceState({}, "", url);
+  }
   $("#logReflection").addEventListener("click", logReflection);
   $("#saveReflection").addEventListener("click", saveReflection);
   $("#openReview").addEventListener("click", openReviewDialog);
@@ -211,7 +219,7 @@ async function init() {
       reloading = true;
       window.location.reload();
     });
-    navigator.serviceWorker.register("./sw.js?v=0.2.3", { updateViaCache: "none" });
+    navigator.serviceWorker.register("./sw.js?v=0.2.4", { updateViaCache: "none" });
   }
 }
 init();
