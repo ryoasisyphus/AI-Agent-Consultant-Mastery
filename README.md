@@ -42,4 +42,4 @@
 
 複製 `templates/ai-consultant`，再替換名稱、能力、任務與閱讀索引。學習介面、進度系統、月曆與複習機制都可沿用。
 
-詳細規則請參閱[專案章程](docs/PROJECT_CHARTER.md)、[範本製作指南](docs/TEMPLATE_AUTHORING.md)與[語言內容規範](docs/LANGUAGE_POLICY.md)。
+詳細規則請參閱[專案章程](docs/PROJECT_CHARTER.md)、[產品與使用規格](docs/PRODUCT_SPEC.md)、[QA 回歸清單](docs/QA_CHECKLIST.md)、[範本製作指南](docs/TEMPLATE_AUTHORING.md)與[語言內容規範](docs/LANGUAGE_POLICY.md)。

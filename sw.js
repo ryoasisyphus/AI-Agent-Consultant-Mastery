@@ -1,7 +1,21 @@
-const CACHE = "learning-os-v2-zh-tw";
-const ASSETS = ["./", "./index.html", "./styles.css", "./app.js", "./manifest.webmanifest", "./templates/ai-consultant/template.json"];
+const CACHE = "learning-os-v5-zh-tw-0.2.1";
+const ASSETS = [
+  "./index.html",
+  "./styles.css?v=0.2.1",
+  "./app.js?v=0.2.1",
+  "./manifest.webmanifest?v=0.2.1",
+  "./templates/ai-consultant/template.json?v=0.2.1",
+  "./assets/icon-192.png",
+  "./assets/icon-512.png"
+];
 
-self.addEventListener("install", (event) => event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(ASSETS))));
+self.addEventListener("install", (event) => {
+  event.waitUntil(
+    caches.open(CACHE)
+      .then((cache) => cache.addAll(ASSETS.map((url) => new Request(url, { cache: "reload" }))))
+      .then(() => self.skipWaiting())
+  );
+});
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys()
