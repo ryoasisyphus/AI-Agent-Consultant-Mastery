@@ -1,4 +1,5 @@
 const STORAGE_KEY = "learning-os:ai-consultant:v1";
+const MOTION_KEY = "learning-os:motion-reduced";
 const defaultState = { xp: 0, minutes: 0, completed: [], sessions: [], reflections: [], review: [], answers: [] };
 let template, state;
 
@@ -56,7 +57,7 @@ function renderMissions() {
     const done = state.completed.includes(mission.id);
     const locked = !isUnlocked(mission);
     const missing = mission.prerequisites.filter((id) => !state.completed.includes(id)).map((id) => template.missions.find((item) => item.id === id)?.title).filter(Boolean);
-    return `<article class="mission ${index === 0 ? "featured" : ""} ${done ? "done" : ""}">
+    return `<article class="mission ${mission.type} ${index === 0 ? "featured" : ""} ${done ? "done" : ""}">
       <div class="mission-top"><span class="pill ${mission.type}">${typeLabel[mission.type]}</span><span class="pill">${mission.minutes} 分鐘</span><span class="pill">${mission.device}</span></div>
       <h3>${mission.title}</h3><p>${mission.summary}</p>
       ${locked ? `<small class="prerequisite">需先完成：${missing.join("、")}</small>` : ""}
@@ -139,9 +140,18 @@ function openReviewDialog() { renderReviewDialog(); $("#reviewDialog").showModal
 
 function render() { renderSummary(); renderMissions(); renderSkills(); renderCalendar(); }
 
+function setMotionPreference(reduced) {
+  document.body.classList.toggle("motion-reduced", reduced);
+  const button = $("#motionToggle");
+  if (!button) return;
+  button.setAttribute("aria-pressed", String(reduced));
+  button.textContent = reduced ? "效果：關" : "效果：開";
+  button.title = reduced ? "開啟介面動態效果" : "關閉介面動態效果";
+}
+
 async function init() {
   try {
-    template = await fetch("templates/ai-consultant/template.json?v=0.2.1").then((response) => {
+    template = await fetch("templates/ai-consultant/template.json?v=0.2.2").then((response) => {
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       return response.json();
     });
@@ -153,6 +163,12 @@ async function init() {
   $("#logReflection").addEventListener("click", logReflection);
   $("#saveReflection").addEventListener("click", saveReflection);
   $("#openReview").addEventListener("click", openReviewDialog);
+  setMotionPreference(localStorage.getItem(MOTION_KEY) === "true");
+  $("#motionToggle").addEventListener("click", () => {
+    const reduced = !document.body.classList.contains("motion-reduced");
+    localStorage.setItem(MOTION_KEY, String(reduced));
+    setMotionPreference(reduced);
+  });
   $("#resetProgress").addEventListener("click", () => { if (window.confirm("要清除這個瀏覽器內的所有學習進度嗎？")) { localStorage.removeItem(STORAGE_KEY); state = load(); render(); } });
   if ("serviceWorker" in navigator) {
     let reloading = false;
@@ -161,7 +177,7 @@ async function init() {
       reloading = true;
       window.location.reload();
     });
-    navigator.serviceWorker.register("./sw.js?v=0.2.1", { updateViaCache: "none" });
+    navigator.serviceWorker.register("./sw.js?v=0.2.2", { updateViaCache: "none" });
   }
 }
 init();

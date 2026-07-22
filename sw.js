@@ -1,10 +1,10 @@
-const CACHE = "learning-os-v5-zh-tw-0.2.1";
+const CACHE = "learning-os-v6-zh-tw-0.2.2";
 const ASSETS = [
   "./index.html",
-  "./styles.css?v=0.2.1",
-  "./app.js?v=0.2.1",
-  "./manifest.webmanifest?v=0.2.1",
-  "./templates/ai-consultant/template.json?v=0.2.1",
+  "./styles.css?v=0.2.2",
+  "./app.js?v=0.2.2",
+  "./manifest.webmanifest?v=0.2.2",
+  "./templates/ai-consultant/template.json?v=0.2.2",
   "./assets/icon-192.png",
   "./assets/icon-512.png"
 ];

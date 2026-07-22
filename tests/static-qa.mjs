@@ -1,8 +1,8 @@
 import { readFile } from "node:fs/promises";
 
-const VERSION = "0.2.1";
+const VERSION = "0.2.2";
 const files = Object.fromEntries(await Promise.all(
-  ["index.html", "app.js", "sw.js", "manifest.webmanifest", "templates/ai-consultant/template.json"]
+  ["index.html", "app.js", "sw.js", "styles.css", "manifest.webmanifest", "templates/ai-consultant/template.json"]
     .map(async (path) => [path, await readFile(new URL(`../${path}`, import.meta.url), "utf8")])
 ));
 const manifest = JSON.parse(files["manifest.webmanifest"]);
@@ -27,6 +27,9 @@ for (const path of ["index.html", "app.js", "sw.js"]) {
 check(files["sw.js"].includes("self.skipWaiting()"), "Service Worker 必須立即接管新版");
 check(files["sw.js"].includes('cache: "reload"'), "預先快取必須略過舊 HTTP cache");
 check(files["app.js"].includes('updateViaCache: "none"'), "Service Worker 更新不得使用舊 HTTP cache");
+check(files["index.html"].includes('id="motionToggle"'), "首頁缺少動態效果開關");
+check(files["app.js"].includes("MOTION_KEY"), "動態效果偏好必須保留在本機");
+check(files["styles.css"].includes("prefers-reduced-motion"), "樣式必須支援系統減少動態效果偏好");
 
 const forbiddenLegacyText = [
   "Observer", "MAIN QUEST", "SIDE QUEST", "DEBUG LAB", "CLIENT CHALLENGE",

@@ -1,5 +1,16 @@
 # 學習系統 QA 回歸清單
 
+## 0.2.2 UI/UX 本機驗證紀錄
+
+| 項目 | 結果 |
+| --- | --- |
+| 程式與資料檢查 | `npm test` 通過。 |
+| 版本與 PWA 快取 | HTML、樣式、程式、manifest、範本與 Service Worker cache 全部改為 0.2.2。 |
+| 視覺系統 | 字體、色彩、任務類型、卡片、能力條、月曆與對話框已統一。 |
+| 動態效果 | 支援 `prefers-reduced-motion` 與本機「效果：開／關」設定。 |
+| 響應式規格 | CSS 保留 700 px 以下單欄及 701 至 900 px 雙欄規則。 |
+| 視覺瀏覽器回歸 | 等待可用瀏覽器連線後補測，尚未公開部署。 |
+
 測試版本：0.2.1  
 測試日期：2026-07-22  
 正式網址：`https://ryoasisyphus.github.io/AI-Agent-Consultant-Mastery/?v=0.2.1`  
