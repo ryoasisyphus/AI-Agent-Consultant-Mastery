@@ -1,7 +1,7 @@
 const STORAGE_KEY = "learning-os:ai-consultant:v1";
 const MOTION_KEY = "learning-os:motion-reduced";
 const READING_SOURCE_PREFIX = "learning-os:reading-source:";
-const READING_SOURCE_PARAM = "readingSource";
+const READING_SOURCE_FRAGMENT = "readingSource";
 const defaultState = { xp: 0, minutes: 0, completed: [], sessions: [], reflections: [], review: [], answers: [] };
 let template, state;
 
@@ -62,11 +62,11 @@ function renderMissions() {
     const done = state.completed.includes(mission.id);
     const locked = !isUnlocked(mission);
     const missing = mission.prerequisites.filter((id) => !state.completed.includes(id)).map((id) => template.missions.find((item) => item.id === id)?.title).filter(Boolean);
-    return `<article class="mission ${mission.type} ${index === 0 ? "featured" : ""} ${done ? "done" : ""}">
-      <div class="mission-top"><span class="pill ${mission.type}">${typeLabel[mission.type]}</span><span class="pill">${mission.minutes} 分鐘</span><span class="pill">${mission.device}</span></div>
-      <h3>${mission.title}</h3><p>${mission.summary}</p>
-      ${locked ? `<small class="prerequisite">需先完成：${missing.join("、")}</small>` : ""}
-      <div class="mission-footer"><span>+${mission.xp} 經驗值</span><button data-mission="${mission.id}" ${locked ? "disabled" : ""}>${done ? "已完成" : locked ? "尚未解鎖" : "開啟任務"}</button></div>
+    return `<article class="mission ${escapeHtml(mission.type)} ${index === 0 ? "featured" : ""} ${done ? "done" : ""}">
+      <div class="mission-top"><span class="pill ${escapeHtml(mission.type)}">${escapeHtml(typeLabel[mission.type] || "學習任務")}</span><span class="pill">${mission.minutes} 分鐘</span><span class="pill">${escapeHtml(mission.device)}</span></div>
+      <h3>${escapeHtml(mission.title)}</h3><p>${escapeHtml(mission.summary)}</p>
+      ${locked ? `<small class="prerequisite">需先完成：${missing.map(escapeHtml).join("、")}</small>` : ""}
+      <div class="mission-footer"><span>+${mission.xp} 經驗值</span><button data-mission="${escapeHtml(mission.id)}" ${locked ? "disabled" : ""}>${done ? "已完成" : locked ? "尚未解鎖" : "開啟任務"}</button></div>
     </article>`;
   }).join("");
   document.querySelectorAll("[data-mission]").forEach((button) => button.addEventListener("click", () => openMission(button.dataset.mission)));
@@ -75,7 +75,7 @@ function renderMissions() {
 function renderSkills() {
   const evidence = Object.fromEntries(template.skills.map((skill) => [skill.id, skill.level]));
   state.completed.forEach((id) => template.missions.find((mission) => mission.id === id)?.skills.forEach((skill) => evidence[skill] = Math.min(5, evidence[skill] + 1)));
-  $("#skills").innerHTML = template.skills.map((skill) => `<div class="skill"><div class="skill-name"><strong>${skill.name}</strong><span>第 ${evidence[skill.id]} / 5 級</span></div><div class="skill-bar">${[1,2,3,4,5].map((level) => `<i class="${level <= evidence[skill.id] ? "on" : ""}"></i>`).join("")}</div></div>`).join("");
+  $("#skills").innerHTML = template.skills.map((skill) => `<div class="skill"><div class="skill-name"><strong>${escapeHtml(skill.name)}</strong><span>第 ${evidence[skill.id]} / 5 級</span></div><div class="skill-bar">${[1,2,3,4,5].map((level) => `<i class="${level <= evidence[skill.id] ? "on" : ""}"></i>`).join("")}</div></div>`).join("");
 }
 
 function renderCalendar() {
@@ -120,7 +120,7 @@ function bindReadingSource(mission) {
 function openMission(id) {
   const mission = template.missions.find((item) => item.id === id); const done = state.completed.includes(id);
   const previousAnswer = state.answers.find((answer) => answer.mission === id)?.text || "";
-  $("#dialogContent").innerHTML = `<div class="mission-reading-layout"><section class="mission-study"><p class="dialog-tag">${typeLabel[mission.type]} · ${mission.minutes} 分鐘 · ${mission.device} · +${mission.xp} 經驗值</p><h2 class="dialog-title" id="missionDialogTitle">${mission.title}</h2><p class="dialog-copy">${mission.summary}</p><div class="reading"><strong>原文閱讀索引 · ${mission.reading.depth}</strong>${mission.reading.label}<br />第 ${mission.reading.pages} 頁</div><p class="dialog-copy">完成前，先回答：<em>這個概念會改變你為客戶做出的哪一項決策？</em></p><label class="answer-field">我的回答<textarea id="missionAnswer" ${done ? "disabled" : ""}>${escapeHtml(previousAnswer)}</textarea></label><label class="answer-field">目前掌握程度<select id="missionConfidence" ${done ? "disabled" : ""}><option value="review">還不確定，加入待複習</option><option value="solid">已能清楚應用</option></select></label><p class="field-error" id="answerError" aria-live="polite"></p><div class="dialog-actions"><button class="primary" value="default" id="completeMission" ${done ? "disabled" : ""}>${done ? "已完成" : "完成任務"}</button><button class="secondary" value="cancel">稍後再學</button></div></section>${readerPanel(mission)}</div>`;
+  $("#dialogContent").innerHTML = `<div class="mission-reading-layout"><section class="mission-study"><p class="dialog-tag">${escapeHtml(typeLabel[mission.type] || "學習任務")} · ${mission.minutes} 分鐘 · ${escapeHtml(mission.device)} · +${mission.xp} 經驗值</p><h2 class="dialog-title" id="missionDialogTitle">${escapeHtml(mission.title)}</h2><p class="dialog-copy">${escapeHtml(mission.summary)}</p><div class="reading"><strong>原文閱讀索引 · ${escapeHtml(mission.reading.depth)}</strong>${escapeHtml(mission.reading.label)}<br />第 ${escapeHtml(mission.reading.pages)} 頁</div><p class="dialog-copy">完成前，先回答：<em>這個概念會改變你為客戶做出的哪一項決策？</em></p><label class="answer-field">我的回答<textarea id="missionAnswer" ${done ? "disabled" : ""}>${escapeHtml(previousAnswer)}</textarea></label><label class="answer-field">目前掌握程度<select id="missionConfidence" ${done ? "disabled" : ""}><option value="review">還不確定，加入待複習</option><option value="solid">已能清楚應用</option></select></label><p class="field-error" id="answerError" aria-live="polite"></p><div class="dialog-actions"><button class="primary" value="default" id="completeMission" ${done ? "disabled" : ""}>${done ? "已完成" : "完成任務"}</button><button class="secondary" value="cancel">稍後再學</button></div></section>${readerPanel(mission)}</div>`;
   if (!$("#missionDialog").open) $("#missionDialog").showModal();
   bindReadingSource(mission);
   $("#completeMission")?.addEventListener("click", (event) => {
@@ -186,7 +186,7 @@ function setMotionPreference(reduced) {
 
 async function init() {
   try {
-    template = await fetch("templates/ai-consultant/template.json?v=0.2.4").then((response) => {
+    template = await fetch("templates/ai-consultant/template.json?v=0.2.5").then((response) => {
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       return response.json();
     });
@@ -195,12 +195,10 @@ async function init() {
     return;
   }
   state = load(); render();
-  const sourceFromUrl = new URLSearchParams(window.location.search).get(READING_SOURCE_PARAM);
-  if (/^[a-zA-Z0-9_-]{10,}$/.test(sourceFromUrl || "")) {
-    saveReadingSource(template.id, sourceFromUrl);
-    const url = new URL(window.location.href);
-    url.searchParams.delete(READING_SOURCE_PARAM);
-    window.history.replaceState({}, "", url);
+  const sourceFromFragment = new URLSearchParams(window.location.hash.slice(1)).get(READING_SOURCE_FRAGMENT);
+  if (/^[a-zA-Z0-9_-]{10,}$/.test(sourceFromFragment || "")) {
+    saveReadingSource(template.id, sourceFromFragment);
+    window.history.replaceState({}, "", `${window.location.pathname}${window.location.search}`);
   }
   $("#logReflection").addEventListener("click", logReflection);
   $("#saveReflection").addEventListener("click", saveReflection);
@@ -219,7 +217,7 @@ async function init() {
       reloading = true;
       window.location.reload();
     });
-    navigator.serviceWorker.register("./sw.js?v=0.2.4", { updateViaCache: "none" });
+    navigator.serviceWorker.register("./sw.js?v=0.2.5", { updateViaCache: "none" });
   }
 }
 init();

@@ -4,7 +4,7 @@
   "description": "以能力養成為核心的 AI 顧問學習夥伴。",
   "lang": "zh-Hant-TW",
   "id": "./",
-  "start_url": "./?v=0.2.4",
+  "start_url": "./?v=0.2.5",
   "scope": "./",
   "display": "standalone",
   "background_color": "#0a1020",

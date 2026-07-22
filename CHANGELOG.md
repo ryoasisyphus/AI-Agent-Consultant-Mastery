@@ -1,5 +1,12 @@
 # 版本變更紀錄
 
+## 0.2.5，2026-07-22
+
+- 將一次性教材來源從 URL query parameter 改為 fragment，避免檔案識別碼出現在 GitHub Pages HTTP 請求與存取紀錄。
+- 加入 Content Security Policy，僅允許本站資源與 Google Drive PDF 閱讀器。
+- 補上 PDF、環境變數、憑證及私人資料夾的 Git 忽略規則。
+- 對課程範本顯示內容套用 HTML 跳脫處理。
+
 ## 0.2.4，2026-07-22
 
 - 支援一次性私人教材設定連結，首次開啟即可保存 PDF 來源到目前瀏覽器。

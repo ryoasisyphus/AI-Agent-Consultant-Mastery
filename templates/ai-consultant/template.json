@@ -2,7 +2,7 @@
   "id": "ai-consultant",
   "name": "AI 顧問養成",
   "tagline": "從智慧代理概念，走向能為客戶創造價值的交付能力。",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "locale": "zh-Hant-TW",
   "languagePolicy": {
     "contentLanguage": "台灣繁體中文",

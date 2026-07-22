@@ -4,3 +4,20 @@
 node_modules/
 dist/
 *.log
+
+# 私人帳號、憑證與本機環境設定
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.keystore
+
+# 不可公開的教材與個人學習資料
+*.pdf
+private/
+personal/
+secrets/
+credentials/
