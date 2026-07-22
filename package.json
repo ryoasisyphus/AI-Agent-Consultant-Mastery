@@ -1,8 +1,8 @@
 {
   "name": "learning-os",
-  "version": "0.2.5",
+  "version": "0.3.0",
   "private": true,
   "scripts": {
-    "test": "node --check app.js && node --check sw.js && node tests/static-qa.mjs"
+    "test": "node --check app.js && node --check pdf-reader.js && node --check sw.js && node tests/static-qa.mjs"
   }
 }

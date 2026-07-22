@@ -1,8 +1,8 @@
 import { readFile } from "node:fs/promises";
 
-const VERSION = "0.2.5";
+const VERSION = "0.3.0";
 const files = Object.fromEntries(await Promise.all(
-  ["index.html", "app.js", "sw.js", "styles.css", "manifest.webmanifest", "templates/ai-consultant/template.json"]
+  ["index.html", "app.js", "pdf-reader.js", "sw.js", "styles.css", "manifest.webmanifest", "templates/ai-consultant/template.json"]
     .map(async (path) => [path, await readFile(new URL(`../${path}`, import.meta.url), "utf8")])
 ));
 const manifest = JSON.parse(files["manifest.webmanifest"]);
@@ -33,10 +33,16 @@ check(files["styles.css"].includes("prefers-reduced-motion"), "樣式必須支�
 check(files["app.js"].includes("READING_SOURCE_PREFIX"), "閱讀器教材來源必須只保留在本機");
 check(files["app.js"].includes("READING_SOURCE_FRAGMENT"), "閱讀器必須支援一次性私人教材設定連結");
 check(!files["app.js"].includes("READING_SOURCE_PARAM"), "閱讀器不得以 query parameter 傳遞私人教材來源");
-check(files["app.js"].includes("drive.google.com/file/d/"), "閱讀器必須支援 Google Drive PDF 預覽");
+check(files["app.js"].includes("drive.google.com/file/d/"), "閱讀器必須支援 Google Drive PDF 備用連結");
 check(files["styles.css"].includes("mission-reading-layout"), "閱讀器缺少 Fold 雙欄版面規則");
+check(files["index.html"].includes("pdf-reader.js"), "首頁缺少本機 PDF 閱讀器");
+check(files["pdf-reader.js"].includes("indexedDB"), "教材 PDF 與課程文字必須使用 IndexedDB");
+check(files["pdf-reader.js"].includes("getTextContent"), "閱讀器必須擷取指定頁面的課程文字");
+check(files["pdf-reader.js"].includes("currentPage = startPage") && files["pdf-reader.js"].includes("renderPage(currentPage)"), "閱讀器必須支援精準顯示指定頁面");
+check(files["sw.js"].includes("vendor/pdfjs/pdf.worker.mjs"), "Service Worker 必須預先快取 PDF.js worker");
+check(!files["app.js"].includes("drive.google.com/file/d/${encodeURIComponent(fileId)}/preview"), "Google Drive iframe 不得作為主要閱讀器");
 check(files["index.html"].includes("Content-Security-Policy"), "首頁缺少 Content Security Policy");
-check(files["index.html"].includes("frame-src https://drive.google.com"), "Content Security Policy 必須允許 Google Drive 閱讀器");
+check(files["index.html"].includes("frame-src 'none'"), "Content Security Policy 必須禁止不再使用的跨來源 iframe");
 
 const forbiddenLegacyText = [
   "Observer", "MAIN QUEST", "SIDE QUEST", "DEBUG LAB", "CLIENT CHALLENGE",
