@@ -2,7 +2,7 @@
   "id": "ai-consultant",
   "name": "AI 顧問養成",
   "tagline": "從智慧代理概念，走向能為客戶創造價值的交付能力。",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "locale": "zh-Hant-TW",
   "languagePolicy": {
     "contentLanguage": "台灣繁體中文",
@@ -29,7 +29,7 @@
       "device": "手機或電腦",
       "xp": 120,
       "skills": ["agent-thinking", "architecture"],
-      "reading": { "label": "主教材 · 智慧代理基礎", "pages": "1–18", "depth": "必讀" },
+      "reading": { "label": "主教材 · 智慧代理基礎", "pages": "1–18", "startPage": 1, "endPage": 18, "depth": "必讀" },
       "prerequisites": []
     },
     {
@@ -41,7 +41,7 @@
       "device": "手機或電腦",
       "xp": 140,
       "skills": ["context", "agent-thinking"],
-      "reading": { "label": "主教材 · 上下文設計", "pages": "45–66", "depth": "精讀" },
+      "reading": { "label": "主教材 · 上下文設計", "pages": "45–66", "startPage": 45, "endPage": 66, "depth": "精讀" },
       "prerequisites": ["agent-01"]
     },
     {
@@ -53,7 +53,7 @@
       "device": "手機或電腦",
       "xp": 90,
       "skills": ["debug", "context"],
-      "reading": { "label": "主教材 · 狀態與記憶", "pages": "67–83", "depth": "建議閱讀" },
+      "reading": { "label": "主教材 · 狀態與記憶", "pages": "67–83", "startPage": 67, "endPage": 83, "depth": "建議閱讀" },
       "prerequisites": []
     },
     {
@@ -65,7 +65,7 @@
       "device": "手機或電腦",
       "xp": 110,
       "skills": ["tools", "architecture"],
-      "reading": { "label": "主教材 · 工具與標準化協議", "pages": "141–157", "depth": "自由探索" },
+      "reading": { "label": "主教材 · 工具與標準化協議", "pages": "141–157", "startPage": 141, "endPage": 157, "depth": "自由探索" },
       "prerequisites": []
     },
     {
@@ -77,7 +77,7 @@
       "device": "建議使用 Fold 展開螢幕或電腦",
       "xp": 220,
       "skills": ["architecture", "rag", "tools"],
-      "reading": { "label": "主教材 · 評估", "pages": "227–244", "depth": "建議閱讀" },
+      "reading": { "label": "主教材 · 評估", "pages": "227–244", "startPage": 227, "endPage": 244, "depth": "建議閱讀" },
       "prerequisites": ["agent-01"]
     }
   ]

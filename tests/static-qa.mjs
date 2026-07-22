@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 
-const VERSION = "0.2.2";
+const VERSION = "0.2.3";
 const files = Object.fromEntries(await Promise.all(
   ["index.html", "app.js", "sw.js", "styles.css", "manifest.webmanifest", "templates/ai-consultant/template.json"]
     .map(async (path) => [path, await readFile(new URL(`../${path}`, import.meta.url), "utf8")])
@@ -30,6 +30,9 @@ check(files["app.js"].includes('updateViaCache: "none"'), "Service Worker 更新
 check(files["index.html"].includes('id="motionToggle"'), "首頁缺少動態效果開關");
 check(files["app.js"].includes("MOTION_KEY"), "動態效果偏好必須保留在本機");
 check(files["styles.css"].includes("prefers-reduced-motion"), "樣式必須支援系統減少動態效果偏好");
+check(files["app.js"].includes("READING_SOURCE_PREFIX"), "閱讀器教材來源必須只保留在本機");
+check(files["app.js"].includes("drive.google.com/file/d/"), "閱讀器必須支援 Google Drive PDF 預覽");
+check(files["styles.css"].includes("mission-reading-layout"), "閱讀器缺少 Fold 雙欄版面規則");
 
 const forbiddenLegacyText = [
   "Observer", "MAIN QUEST", "SIDE QUEST", "DEBUG LAB", "CLIENT CHALLENGE",
@@ -46,6 +49,7 @@ for (const mission of template.missions) {
   check(Number.isFinite(mission.minutes) && mission.minutes > 0, `任務 ${mission.id} 的分鐘數無效`);
   check(Number.isFinite(mission.xp) && mission.xp > 0, `任務 ${mission.id} 的經驗值無效`);
   check(Boolean(mission.device), `任務 ${mission.id} 缺少建議裝置`);
+  check(Number.isInteger(mission.reading?.startPage) && Number.isInteger(mission.reading?.endPage) && mission.reading.startPage <= mission.reading.endPage, `任務 ${mission.id} 缺少有效的閱讀頁碼範圍`);
   for (const prerequisite of mission.prerequisites) {
     check(missionIds.has(prerequisite), `任務 ${mission.id} 指向不存在的前置任務 ${prerequisite}`);
   }

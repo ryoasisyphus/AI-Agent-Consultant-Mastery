@@ -214,6 +214,7 @@ button:focus-visible, a:focus-visible, textarea:focus-visible, select:focus-visi
 .app-footer { display: flex; justify-content: space-between; gap: 12px; padding: 22px 4px; color: var(--muted); font: 11px var(--mono); }
 
 dialog { width: min(590px, calc(100% - 32px)); max-height: calc(100dvh - 32px); overflow: auto; border: 1px solid #3c5c79; border-radius: 20px; background: linear-gradient(150deg, #12243a, #0c1728); box-shadow: 0 30px 90px #000d; color: var(--ink); padding: 31px; }
+#missionDialog { width: min(1120px, calc(100% - 32px)); }
 dialog::backdrop { background: #020714c9; backdrop-filter: blur(4px); }
 .close { position: absolute; top: 11px; right: 14px; min-width: 44px; min-height: 44px; border: 0; background: transparent; color: var(--muted); cursor: pointer; font-size: 28px; }
 .close:hover { color: var(--mint); }
@@ -237,6 +238,25 @@ dialog::backdrop { background: #020714c9; backdrop-filter: blur(4px); }
 .review-item small { color: var(--gold); }
 .review-item button { margin-top: 11px; }
 .empty-state { padding: 26px 0; color: var(--muted); }
+.mission-reading-layout { display: grid; grid-template-columns: minmax(0, .82fr) minmax(360px, 1.18fr); gap: 24px; align-items: start; }
+.mission-study { min-width: 0; }
+.embedded-reader { position: sticky; top: 0; min-width: 0; overflow: hidden; border: 1px solid #3a5f74; border-radius: 16px; background: #071221; box-shadow: inset 0 1px #ffffff0a, 0 18px 35px #01050c5c; }
+.reader-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; border-bottom: 1px solid #28465c; background: linear-gradient(90deg, #122b3b, #0d1c2e); }
+.reader-heading > div { display: grid; gap: 4px; min-width: 0; }
+.reader-heading span { color: var(--mint); font: 10px var(--mono); letter-spacing: .1em; }
+.reader-heading strong { overflow: hidden; font-size: 13px; text-overflow: ellipsis; white-space: nowrap; }
+.reader-heading small { flex: 0 0 auto; color: var(--gold); font: 10px var(--mono); }
+.pdf-reader { display: block; width: 100%; height: min(64dvh, 680px); min-height: 520px; border: 0; background: #f8fafc; }
+.reader-note { margin: 0; padding: 11px 16px; color: var(--muted); font-size: 12px; line-height: 1.65; }
+.reader-empty { min-height: 390px; padding-bottom: 2px; }
+.reader-empty > p { margin: 22px 16px 0; color: var(--muted); font-size: 14px; line-height: 1.75; }
+.reader-source-control { margin: 16px; border: 1px solid #31546a; border-radius: 12px; background: #0d1b2c; padding: 0 13px; }
+.reader-source-control[open] { padding-bottom: 13px; }
+.reader-source-control summary { min-height: 44px; display: flex; align-items: center; color: var(--mint); cursor: pointer; font-size: 13px; font-weight: 700; }
+.reader-source-control p { margin: 0 0 11px; color: var(--muted); font-size: 12px; line-height: 1.6; }
+.reader-source-control label { display: grid; gap: 7px; color: var(--ink); font-size: 12px; font-weight: 700; }
+.reader-source-control input { width: 100%; min-height: 44px; border: 1px solid var(--line); border-radius: 9px; background: #081422; color: var(--ink); padding: 10px; }
+.reader-source-control button { margin-top: 10px; }
 
 @keyframes enter-up { from { opacity: 0; transform: translateY(13px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes glow { 50% { box-shadow: 0 0 0 6px #67e6c810; } }
@@ -256,6 +276,9 @@ body.motion-reduced *, body.motion-reduced *::before, body.motion-reduced *::aft
   .mission-grid { grid-template-columns: repeat(2, 1fr); }
   .mission.featured { grid-column: span 2; }
   .split-section { grid-template-columns: 1fr; }
+  #missionDialog { padding: 24px; }
+  .mission-reading-layout { grid-template-columns: minmax(0, .78fr) minmax(330px, 1.22fr); gap: 18px; }
+  .pdf-reader { min-height: 500px; }
 }
 @media (max-width: 700px) {
   .shell { padding: 0 16px calc(48px + env(safe-area-inset-bottom)); }
@@ -281,4 +304,8 @@ body.motion-reduced *, body.motion-reduced *::before, body.motion-reduced *::aft
   .app-footer { flex-direction: column; }
   dialog { padding: 28px 18px 21px; }
   .dialog-title { font-size: 27px; }
+  #missionDialog { width: min(620px, calc(100% - 20px)); padding: 25px 14px 18px; }
+  .mission-reading-layout { grid-template-columns: 1fr; gap: 18px; }
+  .embedded-reader { position: static; }
+  .pdf-reader { height: 68dvh; min-height: 460px; }
 }

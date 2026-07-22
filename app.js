@@ -1,5 +1,6 @@
 const STORAGE_KEY = "learning-os:ai-consultant:v1";
 const MOTION_KEY = "learning-os:motion-reduced";
+const READING_SOURCE_PREFIX = "learning-os:reading-source:";
 const defaultState = { xp: 0, minutes: 0, completed: [], sessions: [], reflections: [], review: [], answers: [] };
 let template, state;
 
@@ -21,6 +22,9 @@ const load = () => {
   }
 };
 const save = () => localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+const readingSourceKey = (templateId) => `${READING_SOURCE_PREFIX}${templateId}`;
+const loadReadingSource = (templateId) => localStorage.getItem(readingSourceKey(templateId)) || "";
+const saveReadingSource = (templateId, fileId) => localStorage.setItem(readingSourceKey(templateId), fileId);
 const typeLabel = { main: "主線任務", side: "支線任務", debug: "除錯實驗室", challenge: "客戶情境挑戰" };
 const escapeHtml = (value = "") => value.replace(/[&<>'"]/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" }[character]));
 const localDate = (date = new Date()) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
@@ -83,11 +87,41 @@ function renderCalendar() {
   }).join("");
 }
 
+function driveFileId(value = "") {
+  try {
+    const url = new URL(value.trim());
+    const pathMatch = url.pathname.match(/\/d\/([a-zA-Z0-9_-]+)/);
+    return pathMatch?.[1] || url.searchParams.get("id") || "";
+  } catch {
+    return "";
+  }
+}
+
+function readerPanel(mission) {
+  const fileId = loadReadingSource(template.id);
+  const startPage = mission.reading.startPage || Number(String(mission.reading.pages).match(/\d+/)?.[0] || 1);
+  const endPage = mission.reading.endPage || startPage;
+  const setup = `<details class="reader-source-control" ${fileId ? "" : "open"}><summary>${fileId ? "更換教材連結" : "設定私人 Google Drive PDF"}</summary><p>連結只保留在這台裝置的瀏覽器，不會寫入公開 Repository。</p><label>Google Drive PDF 連結<input id="readingSourceUrl" type="url" inputmode="url" autocomplete="url" placeholder="貼上 Google Drive PDF 共用連結" value="" /></label><button class="secondary" type="button" id="saveReadingSource">儲存教材連結</button><span class="field-error" id="readerSourceError" aria-live="polite"></span></details>`;
+  if (!fileId) return `<aside class="embedded-reader reader-empty"><div class="reader-heading"><span>原文閱讀</span><strong>第 ${startPage}–${endPage} 頁</strong></div><p>設定一次私人教材連結後，之後每個任務都會在這裡直接開啟指定閱讀區域。</p>${setup}</aside>`;
+  const src = `https://drive.google.com/file/d/${encodeURIComponent(fileId)}/preview#page=${startPage}`;
+  return `<aside class="embedded-reader"><div class="reader-heading"><div><span>原文閱讀</span><strong>${mission.reading.label}</strong></div><small>第 ${startPage}–${endPage} 頁</small></div><iframe class="pdf-reader" title="${escapeHtml(mission.reading.label)}，第 ${startPage} 至 ${endPage} 頁" src="${src}" loading="lazy" allow="fullscreen"></iframe><p class="reader-note">從第 ${startPage} 頁開始，閱讀到第 ${endPage} 頁。若未載入，請確認目前瀏覽器已登入有權限的 Google 帳號。</p>${setup}</aside>`;
+}
+
+function bindReadingSource(mission) {
+  $("#saveReadingSource")?.addEventListener("click", () => {
+    const fileId = driveFileId($("#readingSourceUrl").value);
+    if (!fileId) { $("#readerSourceError").textContent = "請貼上 Google Drive PDF 的共用連結。"; return; }
+    saveReadingSource(template.id, fileId);
+    openMission(mission.id);
+  });
+}
+
 function openMission(id) {
   const mission = template.missions.find((item) => item.id === id); const done = state.completed.includes(id);
   const previousAnswer = state.answers.find((answer) => answer.mission === id)?.text || "";
-  $("#dialogContent").innerHTML = `<p class="dialog-tag">${typeLabel[mission.type]} · ${mission.minutes} 分鐘 · ${mission.device} · +${mission.xp} 經驗值</p><h2 class="dialog-title" id="missionDialogTitle">${mission.title}</h2><p class="dialog-copy">${mission.summary}</p><div class="reading"><strong>原文閱讀索引 · ${mission.reading.depth}</strong>${mission.reading.label}<br />第 ${mission.reading.pages} 頁</div><p class="dialog-copy">完成前，先回答：<em>這個概念會改變你為客戶做出的哪一項決策？</em></p><label class="answer-field">我的回答<textarea id="missionAnswer" ${done ? "disabled" : ""}>${escapeHtml(previousAnswer)}</textarea></label><label class="answer-field">目前掌握程度<select id="missionConfidence" ${done ? "disabled" : ""}><option value="review">還不確定，加入待複習</option><option value="solid">已能清楚應用</option></select></label><p class="field-error" id="answerError" aria-live="polite"></p><div class="dialog-actions"><button class="primary" value="default" id="completeMission" ${done ? "disabled" : ""}>${done ? "已完成" : "完成任務"}</button><button class="secondary" value="cancel">稍後再學</button></div>`;
-  $("#missionDialog").showModal();
+  $("#dialogContent").innerHTML = `<div class="mission-reading-layout"><section class="mission-study"><p class="dialog-tag">${typeLabel[mission.type]} · ${mission.minutes} 分鐘 · ${mission.device} · +${mission.xp} 經驗值</p><h2 class="dialog-title" id="missionDialogTitle">${mission.title}</h2><p class="dialog-copy">${mission.summary}</p><div class="reading"><strong>原文閱讀索引 · ${mission.reading.depth}</strong>${mission.reading.label}<br />第 ${mission.reading.pages} 頁</div><p class="dialog-copy">完成前，先回答：<em>這個概念會改變你為客戶做出的哪一項決策？</em></p><label class="answer-field">我的回答<textarea id="missionAnswer" ${done ? "disabled" : ""}>${escapeHtml(previousAnswer)}</textarea></label><label class="answer-field">目前掌握程度<select id="missionConfidence" ${done ? "disabled" : ""}><option value="review">還不確定，加入待複習</option><option value="solid">已能清楚應用</option></select></label><p class="field-error" id="answerError" aria-live="polite"></p><div class="dialog-actions"><button class="primary" value="default" id="completeMission" ${done ? "disabled" : ""}>${done ? "已完成" : "完成任務"}</button><button class="secondary" value="cancel">稍後再學</button></div></section>${readerPanel(mission)}</div>`;
+  if (!$("#missionDialog").open) $("#missionDialog").showModal();
+  bindReadingSource(mission);
   $("#completeMission")?.addEventListener("click", (event) => {
     event.preventDefault();
     const answer = $("#missionAnswer").value.trim();
@@ -151,7 +185,7 @@ function setMotionPreference(reduced) {
 
 async function init() {
   try {
-    template = await fetch("templates/ai-consultant/template.json?v=0.2.2").then((response) => {
+    template = await fetch("templates/ai-consultant/template.json?v=0.2.3").then((response) => {
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       return response.json();
     });
@@ -177,7 +211,7 @@ async function init() {
       reloading = true;
       window.location.reload();
     });
-    navigator.serviceWorker.register("./sw.js?v=0.2.2", { updateViaCache: "none" });
+    navigator.serviceWorker.register("./sw.js?v=0.2.3", { updateViaCache: "none" });
   }
 }
 init();
