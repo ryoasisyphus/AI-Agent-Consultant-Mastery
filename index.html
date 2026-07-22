@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0a1020" />
+    <meta name="description" content="A capability-first learning system for AI consultants." />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Learning OS · AI Consultant Mastery</title>
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <a class="brand" href="#top" aria-label="Learning OS home"><span class="brand-mark">L</span><span>Learning OS</span></a>
+        <button class="icon-button" id="resetProgress" aria-label="Reset local demo progress" title="Reset local demo progress">↻</button>
+      </header>
+
+      <section class="hero" id="top">
+        <p class="eyebrow">AI CONSULTANT MASTERY <span>•</span> OPEN WORLD</p>
+        <div class="hero-grid">
+          <div>
+            <h1>Learn what moves<br /><em>your work</em> forward.</h1>
+            <p class="lede">No catch-up debt. Pick a mission that matches your energy, work context, and device today.</p>
+          </div>
+          <div class="level-card" aria-label="Current level">
+            <span class="tiny-label">CONSULTANT LEVEL</span>
+            <strong id="level">01</strong>
+            <span id="levelTitle">Observer</span>
+            <div class="meter"><i id="levelMeter"></i></div>
+            <small><span id="xp">0</span> / <span id="nextXp">400</span> XP</small>
+          </div>
+        </div>
+      </section>
+
+      <section class="stats" aria-label="Learning summary">
+        <div><span class="tiny-label">FOCUS TIME</span><strong id="minutes">0m</strong><small>all time</small></div>
+        <div><span class="tiny-label">MISSIONS</span><strong id="completed">0</strong><small>completed</small></div>
+        <div><span class="tiny-label">RHYTHM</span><strong id="streak">0</strong><small>active days</small></div>
+        <div><span class="tiny-label">REVIEW</span><strong id="reviewCount">0</strong><small>items due</small></div>
+      </section>
+
+      <section class="section-heading"><div><p class="eyebrow">TODAY'S PATH</p><h2>Choose a useful next move.</h2></div><button class="text-button" id="logReflection">Log a reflection →</button></section>
+      <section class="mission-grid" id="missions" aria-live="polite"></section>
+
+      <section class="split-section">
+        <article class="progress-card">
+          <p class="eyebrow">CAPABILITY MAP</p>
+          <h2>Skills grow from evidence.</h2>
+          <p class="muted">Complete missions, solve cases, and revisit uncertain answers. Progress is not based only on attendance.</p>
+          <div id="skills" class="skill-list"></div>
+        </article>
+        <article class="calendar-card">
+          <div class="calendar-title"><div><p class="eyebrow">LEARNING RHYTHM</p><h2>This month</h2></div><span id="monthLabel"></span></div>
+          <div class="weekdays"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+          <div id="calendar" class="calendar" aria-label="Learning activity calendar"></div>
+          <p class="calendar-note"><i></i> A filled day means you learned in your own time.</p>
+        </article>
+      </section>
+
+      <section class="how-it-works">
+        <p class="eyebrow">LOCAL FIRST</p>
+        <h2>Your learning record belongs to you.</h2>
+        <p>XP, sessions, and reflections remain in this browser until a future optional sync is enabled. The open-source template contains no personal study data.</p>
+      </section>
+    </main>
+    <dialog id="missionDialog"><form method="dialog"><button class="close" aria-label="Close">×</button><div id="dialogContent"></div></form></dialog>
+    <script src="app.js"></script>
+  </body>
+</html>

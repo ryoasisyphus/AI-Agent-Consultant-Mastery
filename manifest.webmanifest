@@ -1,0 +1,12 @@
+{
+  "name": "Learning OS · AI Consultant Mastery",
+  "short_name": "Learning OS",
+  "description": "A capability-first learning companion for AI consultants.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0a1020",
+  "theme_color": "#0a1020",
+  "icons": [
+    { "src": "assets/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
