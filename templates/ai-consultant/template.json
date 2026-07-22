@@ -1,71 +1,78 @@
 {
   "id": "ai-consultant",
-  "name": "AI Consultant Mastery",
-  "tagline": "From agent concepts to valuable client delivery.",
-  "version": "0.1.0",
+  "name": "AI 顧問養成",
+  "tagline": "從智慧代理概念，走向能為客戶創造價值的交付能力。",
+  "version": "0.1.1",
+  "locale": "zh-Hant-TW",
+  "languagePolicy": {
+    "contentLanguage": "台灣繁體中文",
+    "termRule": "英文原文只在教材以中文名詞加括號原文呈現時保留，格式為中文名詞（English Term）。",
+    "autoTranslateTerms": false,
+    "requiresSourceVerification": true
+  },
   "defaultDailyMinutes": 15,
   "skills": [
-    { "id": "agent-thinking", "name": "Agent thinking", "level": 2 },
-    { "id": "context", "name": "Context engineering", "level": 1 },
-    { "id": "rag", "name": "RAG & retrieval", "level": 0 },
-    { "id": "tools", "name": "Tools & MCP", "level": 0 },
-    { "id": "debug", "name": "Debug diagnosis", "level": 1 },
-    { "id": "architecture", "name": "Solution architecture", "level": 1 }
+    { "id": "agent-thinking", "name": "智慧代理思維", "level": 2 },
+    { "id": "context", "name": "上下文設計", "level": 1 },
+    { "id": "rag", "name": "檢索與知識運用", "level": 0 },
+    { "id": "tools", "name": "工具與系統整合", "level": 0 },
+    { "id": "debug", "name": "問題診斷", "level": 1 },
+    { "id": "architecture", "name": "解決方案架構", "level": 1 }
   ],
   "missions": [
     {
       "id": "agent-01",
       "type": "main",
-      "title": "Agent ≠ chatbot",
-      "summary": "Learn the consultant lens for deciding when a workflow needs agency.",
+      "title": "智慧代理與聊天機器人的差別",
+      "summary": "建立顧問判斷框架，確認一個工作流程是否真的需要智慧代理能力。",
       "minutes": 15,
       "xp": 120,
       "skills": ["agent-thinking", "architecture"],
-      "reading": { "label": "AI Agents in Depth · Agent foundations", "pages": "1–18", "depth": "Essential" },
+      "reading": { "label": "主教材 · 智慧代理基礎", "pages": "1–18", "depth": "必讀" },
       "prerequisites": []
     },
     {
       "id": "context-01",
       "type": "main",
-      "title": "Design the context, not just the prompt",
-      "summary": "Map the information an agent needs at each decision point.",
+      "title": "設計上下文，不只修改提示詞",
+      "summary": "整理智慧代理在每個決策點真正需要的資訊、狀態與限制。",
       "minutes": 15,
       "xp": 140,
       "skills": ["context", "agent-thinking"],
-      "reading": { "label": "AI Agents in Depth · Context engineering", "pages": "45–66", "depth": "Deep read" },
+      "reading": { "label": "主教材 · 上下文設計", "pages": "45–66", "depth": "精讀" },
       "prerequisites": ["agent-01"]
     },
     {
       "id": "debug-01",
       "type": "debug",
-      "title": "Debug Lab: the agent forgets the user",
-      "summary": "Distinguish context loss, memory design, and retrieval failures.",
+      "title": "除錯實驗室：智慧代理忘記使用者",
+      "summary": "分辨上下文遺失、記憶設計與資料檢索失敗造成的不同症狀。",
       "minutes": 10,
       "xp": 90,
       "skills": ["debug", "context"],
-      "reading": { "label": "AI Agents in Depth · State & memory", "pages": "67–83", "depth": "Recommended" },
+      "reading": { "label": "主教材 · 狀態與記憶", "pages": "67–83", "depth": "建議閱讀" },
       "prerequisites": []
     },
     {
       "id": "mcp-01",
       "type": "side",
-      "title": "MCP field guide",
-      "summary": "Understand where MCP fits between a model, tools, and enterprise systems.",
+      "title": "模型、工具與企業系統如何連接",
+      "summary": "理解標準化工具協議在模型、工具與企業系統之間扮演的角色。",
       "minutes": 15,
       "xp": 110,
       "skills": ["tools", "architecture"],
-      "reading": { "label": "AI Agents in Depth · Tools & MCP", "pages": "141–157", "depth": "Explore" },
+      "reading": { "label": "主教材 · 工具與標準化協議", "pages": "141–157", "depth": "自由探索" },
       "prerequisites": []
     },
     {
       "id": "case-01",
       "type": "challenge",
-      "title": "Client Challenge: support agent triage",
-      "summary": "Choose workflow, RAG, tools, memory, and a measurement plan for a support team.",
+      "title": "客戶情境挑戰：客服智慧代理分流",
+      "summary": "為客服團隊選擇工作流程、檢索、工具、記憶與成果衡量方式。",
       "minutes": 20,
       "xp": 220,
       "skills": ["architecture", "rag", "tools"],
-      "reading": { "label": "AI Agents in Depth · Evaluation", "pages": "227–244", "depth": "Recommended" },
+      "reading": { "label": "主教材 · 評估", "pages": "227–244", "depth": "建議閱讀" },
       "prerequisites": ["agent-01"]
     }
   ]

@@ -1,41 +1,45 @@
-# Learning OS
+# 學習系統
 
-An open, mobile-first learning system built around capability—not a fixed calendar.
+一套以能力養成為核心、適合手機使用、可自由替換學習主題的開源系統。
 
-**AI Consultant Mastery** is the first template. It helps learners build the judgement to design, diagnose, and deliver valuable AI agent workflows.
+「AI 顧問養成」是第一個主題範本，目標是讓學習者能判斷需求、設計方案、診斷問題，並交付有價值的智慧代理工作流程。
 
-## What is included
+## 目前功能
 
-- Fold-first PWA dashboard with local, private progress tracking
-- Main quests with only meaningful prerequisites
-- Side quests, review queue, and consultant challenges
-- XP, levels, learning minutes, and a visual activity calendar
-- A template format designed to support any future learning domain
-- GitHub Pages workflow for zero-maintenance hosting
+- 以 Fold 折疊手機為優先的漸進式網頁應用程式（PWA）
+- 只對必要知識設定前置條件的主線任務
+- 支線任務、複習清單與顧問情境挑戰
+- 經驗值、等級、學習時間與活動月曆
+- 可支援其他學習領域的主題範本格式
+- GitHub Pages 自動發布流程
 
-## Start locally
+## 使用方式
 
-Open `index.html` in a browser for a static preview. For the installable experience, use the GitHub Pages URL after deployment and choose **Add to Home screen** on your Fold.
+部署後開啟 GitHub Pages 網址，在 Fold 的瀏覽器選擇「加到主畫面」，即可用接近 App 的方式開啟。個人學習紀錄只保留在目前使用的瀏覽器。
 
-## Repository map
+## 專案結構
 
 ```text
 .
-├── index.html                 # Learning OS application shell
-├── styles.css                 # Fold-first visual system
-├── app.js                     # Local learning engine and interactions
+├── index.html                 # 學習系統主畫面
+├── styles.css                 # Fold 優先的視覺樣式
+├── app.js                     # 本機學習引擎與互動
 ├── templates/
-│   └── ai-consultant/         # The first domain template
-├── docs/                      # Product decisions and implementation guides
-└── .github/workflows/         # GitHub Pages deployment
+│   └── ai-consultant/         # 第一個學習主題範本
+├── docs/                      # 產品決策與製作指南
+└── .github/workflows/         # GitHub Pages 發布流程
 ```
 
-## Privacy model
+## 語言規則
 
-Your learning log, XP, and session data stay in browser storage on your device. The public repository contains only reusable learning templates and sample data. Sync and account features are intentionally deferred until the local-first experience is proven.
+使用者可見內容與學習內容預設使用台灣繁體中文。英文原文只在教材本身採用「中文名詞（English Term）」格式時保留；系統不得自行翻譯、補寫或擴充英文術語。
 
-## Create another learning project
+## 隱私設計
 
-Duplicate `templates/ai-consultant`, replace its metadata, skills, missions, and reading index, then point `app.js` at the new template. The dashboard and progression engine remain unchanged.
+學習日誌、經驗值與學習時段保留在裝置的瀏覽器儲存空間。公開 Repository 只包含可重複使用的學習範本與示例資料，不包含個人紀錄或受版權保護的教材。
 
-See [the project charter](docs/PROJECT_CHARTER.md) and [template authoring guide](docs/TEMPLATE_AUTHORING.md).
+## 建立新的學習專案
+
+複製 `templates/ai-consultant`，再替換名稱、能力、任務與閱讀索引。學習介面、進度系統、月曆與複習機制都可沿用。
+
+詳細規則請參閱[專案章程](docs/PROJECT_CHARTER.md)、[範本製作指南](docs/TEMPLATE_AUTHORING.md)與[語言內容規範](docs/LANGUAGE_POLICY.md)。

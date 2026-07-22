@@ -1,71 +1,71 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-Hant-TW">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#0a1020" />
-    <meta name="description" content="A capability-first learning system for AI consultants." />
+    <meta name="description" content="以能力養成為核心的 AI 顧問學習系統。" />
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="styles.css" />
-    <title>Learning OS · AI Consultant Mastery</title>
+    <title>學習系統 · AI 顧問養成</title>
   </head>
   <body>
     <main class="shell">
       <header class="topbar">
-        <a class="brand" href="#top" aria-label="Learning OS home"><span class="brand-mark">L</span><span>Learning OS</span></a>
-        <button class="icon-button" id="resetProgress" aria-label="Reset local demo progress" title="Reset local demo progress">↻</button>
+        <a class="brand" href="#top" aria-label="回到學習系統首頁"><span class="brand-mark">學</span><span>學習系統</span></a>
+        <button class="icon-button" id="resetProgress" aria-label="重設本機學習進度" title="重設本機學習進度">↻</button>
       </header>
 
       <section class="hero" id="top">
-        <p class="eyebrow">AI CONSULTANT MASTERY <span>•</span> OPEN WORLD</p>
+        <p class="eyebrow">AI 顧問養成 <span>•</span> 自由探索</p>
         <div class="hero-grid">
           <div>
-            <h1>Learn what moves<br /><em>your work</em> forward.</h1>
-            <p class="lede">No catch-up debt. Pick a mission that matches your energy, work context, and device today.</p>
+            <h1>今天學一點，<br /><em>工作就前進一點。</em></h1>
+            <p class="lede">不用追趕進度。依照今天的時間、工作需求與使用裝置，挑一個最值得完成的任務。</p>
           </div>
-          <div class="level-card" aria-label="Current level">
-            <span class="tiny-label">CONSULTANT LEVEL</span>
+          <div class="level-card" aria-label="目前顧問等級">
+            <span class="tiny-label">顧問等級</span>
             <strong id="level">01</strong>
-            <span id="levelTitle">Observer</span>
+            <span id="levelTitle">觀察者</span>
             <div class="meter"><i id="levelMeter"></i></div>
             <small><span id="xp">0</span> / <span id="nextXp">400</span> XP</small>
           </div>
         </div>
       </section>
 
-      <section class="stats" aria-label="Learning summary">
-        <div><span class="tiny-label">FOCUS TIME</span><strong id="minutes">0m</strong><small>all time</small></div>
-        <div><span class="tiny-label">MISSIONS</span><strong id="completed">0</strong><small>completed</small></div>
-        <div><span class="tiny-label">RHYTHM</span><strong id="streak">0</strong><small>active days</small></div>
-        <div><span class="tiny-label">REVIEW</span><strong id="reviewCount">0</strong><small>items due</small></div>
+      <section class="stats" aria-label="學習摘要">
+        <div><span class="tiny-label">專注時間</span><strong id="minutes">0 分</strong><small>累積投入</small></div>
+        <div><span class="tiny-label">學習任務</span><strong id="completed">0</strong><small>已完成</small></div>
+        <div><span class="tiny-label">學習節奏</span><strong id="streak">0</strong><small>有學習的日子</small></div>
+        <div><span class="tiny-label">待複習</span><strong id="reviewCount">0</strong><small>需重新確認</small></div>
       </section>
 
-      <section class="section-heading"><div><p class="eyebrow">TODAY'S PATH</p><h2>Choose a useful next move.</h2></div><button class="text-button" id="logReflection">Log a reflection →</button></section>
+      <section class="section-heading"><div><p class="eyebrow">今日路線</p><h2>挑一個對現在最有用的任務。</h2></div><button class="text-button" id="logReflection">記錄學習反思 →</button></section>
       <section class="mission-grid" id="missions" aria-live="polite"></section>
 
       <section class="split-section">
         <article class="progress-card">
-          <p class="eyebrow">CAPABILITY MAP</p>
-          <h2>Skills grow from evidence.</h2>
-          <p class="muted">Complete missions, solve cases, and revisit uncertain answers. Progress is not based only on attendance.</p>
+          <p class="eyebrow">能力地圖</p>
+          <h2>用實際表現累積能力。</h2>
+          <p class="muted">完成任務、解決案例，再回頭檢查不確定的答案。進度不只計算上課次數。</p>
           <div id="skills" class="skill-list"></div>
         </article>
         <article class="calendar-card">
-          <div class="calendar-title"><div><p class="eyebrow">LEARNING RHYTHM</p><h2>This month</h2></div><span id="monthLabel"></span></div>
-          <div class="weekdays"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
-          <div id="calendar" class="calendar" aria-label="Learning activity calendar"></div>
-          <p class="calendar-note"><i></i> A filled day means you learned in your own time.</p>
+          <div class="calendar-title"><div><p class="eyebrow">學習節奏</p><h2>本月紀錄</h2></div><span id="monthLabel"></span></div>
+          <div class="weekdays"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
+          <div id="calendar" class="calendar" aria-label="學習活動月曆"></div>
+          <p class="calendar-note"><i></i> 有色日期代表你依自己的時間完成了學習。</p>
         </article>
       </section>
 
       <section class="how-it-works">
-        <p class="eyebrow">LOCAL FIRST</p>
-        <h2>Your learning record belongs to you.</h2>
-        <p>XP, sessions, and reflections remain in this browser until a future optional sync is enabled. The open-source template contains no personal study data.</p>
+        <p class="eyebrow">本機資料優先</p>
+        <h2>學習紀錄由你掌握。</h2>
+        <p>經驗值、學習時段與反思目前只保留在這個瀏覽器。公開的開源範本不會包含個人學習資料。</p>
       </section>
     </main>
-    <dialog id="missionDialog"><form method="dialog"><button class="close" aria-label="Close">×</button><div id="dialogContent"></div></form></dialog>
+    <dialog id="missionDialog"><form method="dialog"><button class="close" aria-label="關閉">×</button><div id="dialogContent"></div></form></dialog>
     <script src="app.js"></script>
   </body>
 </html>

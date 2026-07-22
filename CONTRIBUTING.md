@@ -1,9 +1,10 @@
-# Contributing
+# 貢獻指南
 
-Contributions should preserve the platform's local-first, mobile-first, capability-driven design.
+所有修改都應維持本機資料優先、Fold 優先與能力導向的產品設計。
 
-- Keep learner data out of templates and commits.
-- Do not include copyrighted source materials unless they are clearly licensed for redistribution.
-- Add prerequisites sparingly and explain why a gate is necessary.
-- Keep missions outcome-oriented and achievable in a focused session.
-- Test the dashboard on a narrow mobile viewport before opening a pull request.
+- 學習者個人資料不得放入範本或 commit。
+- 未取得再散布授權的教材不得放入 Repository。
+- 前置任務應保持最少，並清楚說明設定門檻的理由。
+- 任務應以學習成果為導向，並能在一次專注學習中完成。
+- 使用者可見內容使用台灣繁體中文，英文術語遵守 `docs/LANGUAGE_POLICY.md`。
+- 建立 PR 前，先用窄版手機畫面檢查介面。

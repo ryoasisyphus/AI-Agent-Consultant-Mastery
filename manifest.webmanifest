@@ -1,7 +1,8 @@
 {
-  "name": "Learning OS · AI Consultant Mastery",
-  "short_name": "Learning OS",
-  "description": "A capability-first learning companion for AI consultants.",
+  "name": "學習系統 · AI 顧問養成",
+  "short_name": "學習系統",
+  "description": "以能力養成為核心的 AI 顧問學習夥伴。",
+  "lang": "zh-Hant-TW",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#0a1020",

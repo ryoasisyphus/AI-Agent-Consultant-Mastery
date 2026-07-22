@@ -1,8 +1,14 @@
-# Changelog
+# 版本變更紀錄
 
-## 0.1.0 — 2026-07-22
+## 0.1.1，2026-07-22
 
-- Introduced the Learning OS project foundation.
-- Added the AI Consultant Mastery reference template.
-- Added a Fold-first static PWA dashboard with local learning data.
-- Added GitHub Pages deployment automation and project documentation.
+- 將介面、課程範本與專案文件改為台灣繁體中文。
+- 新增語言與術語規範，限制英文原文只能依教材原文保留。
+- 調整字型與中文字距，改善 Fold 螢幕上的繁體中文閱讀體驗。
+
+## 0.1.0，2026-07-22
+
+- 建立學習系統專案基礎。
+- 加入 AI 顧問養成參考範本。
+- 加入以 Fold 為優先、使用本機學習資料的 PWA 儀表板。
+- 加入 GitHub Pages 自動發布與專案文件。

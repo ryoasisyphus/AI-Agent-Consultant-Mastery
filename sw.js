@@ -1,4 +1,4 @@
-const CACHE = "learning-os-v1";
+const CACHE = "learning-os-v2-zh-tw";
 const ASSETS = ["./", "./index.html", "./styles.css", "./app.js", "./manifest.webmanifest", "./templates/ai-consultant/template.json"];
 
 self.addEventListener("install", (event) => event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(ASSETS))));

@@ -1,35 +1,37 @@
-# Template authoring
+# 學習範本製作指南
 
-A template supplies domain knowledge while the Learning OS application supplies the interface, local progress model, calendar, XP, and review loop.
+主題範本負責提供領域知識；學習系統負責介面、本機進度、月曆、經驗值與複習循環。
 
-## Create a new template
+## 建立新範本
 
-1. Copy `templates/ai-consultant` to `templates/<your-domain>`.
-2. Update the `id`, name, tagline, skills, and missions in `template.json`.
-3. Make each mission small enough to be useful in one focused sitting (usually 10–20 minutes).
-4. Add prerequisites only when failing to learn them first would genuinely make the mission incomprehensible.
-5. Include the source title, page range, and reading depth if a copyrighted source is privately available to the learner. Do not commit the source itself without distribution rights.
-6. Change the template path in `app.js` when the new template becomes the active project.
+1. 將 `templates/ai-consultant` 複製為 `templates/<your-domain>`。
+2. 更新 `template.json` 的名稱、說明、能力與任務。
+3. 每個任務應能在一次專注學習中完成，建議為 10 至 20 分鐘。
+4. 只有缺少某項知識會導致內容無法理解時，才設定前置任務。
+5. 若學習者合法持有教材，可記錄教材章節、頁碼與閱讀深度。公開 Repository 不得包含未獲授權的教材。
+6. 將 `app.js` 的範本路徑改為新的主題範本。
 
-## Mission schema
+## 任務資料格式
 
 ```json
 {
   "id": "stable-domain-id",
   "type": "main | side | debug | challenge",
-  "title": "Outcome-oriented title",
-  "summary": "What the learner will decide, explain, or make.",
+  "title": "以成果為導向的繁體中文標題",
+  "summary": "說明學習者要判斷、解釋或完成什麼",
   "minutes": 15,
   "xp": 120,
   "skills": ["skill-id"],
-  "reading": { "label": "Source section", "pages": "12–18", "depth": "Essential" },
+  "reading": { "label": "教材章節", "pages": "12–18", "depth": "必讀" },
   "prerequisites": []
 }
 ```
 
-## Reading depths
+`id`、`type` 等程式欄位可使用英文識別字，所有顯示給學習者的內容都必須使用台灣繁體中文。
 
-- **Essential** — read before applying the concept.
-- **Deep read** — build durable judgement and reusable mental models.
-- **Recommended** — broadens context after the mission.
-- **Explore** — optional discovery for a current interest or work need.
+## 閱讀深度
+
+- **必讀**：應在應用概念前完成。
+- **精讀**：用來建立可長期使用的判斷框架。
+- **建議閱讀**：完成任務後補充背景與細節。
+- **自由探索**：依興趣或目前工作需求選讀。

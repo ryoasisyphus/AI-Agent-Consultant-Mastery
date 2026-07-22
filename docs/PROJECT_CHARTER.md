@@ -1,54 +1,56 @@
-# Learning OS — Project Charter
+# 學習系統專案章程
 
-## Product vision
+## 產品願景
 
-Learning OS is a reusable, open-source learning platform. It transforms source material and real work context into an adaptive set of missions, practice, reflection, and evidence of capability.
+學習系統是一套可重複使用的開源學習平台。它會把教材、工作需求與學習表現整理成任務、練習、反思與能力證據。
 
-**AI Consultant Mastery** is the first reference template, not a hard-coded product boundary.
+「AI 顧問養成」是第一個參考範本。核心系統不綁定特定學科，未來可替換為 AWS、語言、管理或其他學習主題。
 
-## Learner outcome
+## AI 顧問養成目標
 
-The AI Consultant template aims to help a learner independently discover enterprise needs, select an appropriate workflow or agent design, diagnose common failures, and deliver an AI solution with measurable value.
+學習者能獨立拆解企業需求，選擇適合的工作流程或智慧代理方案，診斷常見問題，並交付具有明確衡量方式的解決方案。
 
-## Experience principles
+## 體驗原則
 
-1. **Capability over attendance.** Completion is evidence from explanations, design choices, debugging, and implementation—not merely opening a lesson.
-2. **Open world, with honest gates.** Only true prerequisite relationships block a main quest. Side quests stay explorable.
-3. **Flexible rhythm.** A daily 21:30 reminder is supportive, not a deadline. A learner may do zero, one, or several missions without a catch-up penalty.
-4. **Fold-first.** The compact screen supports quick status and starting; the unfolded 8-inch screen supports deep reading, diagrams, and challenges. Desktop-only work is visibly labelled ahead of time.
-5. **Local first.** Personal logs live on the learner's device by default. Sharing and cloud sync remain optional additions.
-6. **Gamification serves learning.** XP, maps, calendars, and achievements make progress legible; they do not reward empty activity.
-7. **Open source by design.** Domain content lives in templates so a new subject can reuse the engine and dashboard.
+1. **能力優先。** 完成任務需要能解釋、做決策、除錯或實作，不能只以開啟課程視為完成。
+2. **自由探索。** 只有真正存在知識依賴時，主線任務才會設定門檻。支線任務可依興趣或工作需求選擇。
+3. **彈性節奏。** 每晚 21:30 的提醒只負責提醒。使用者可以不學、完成一堂或連續完成多堂，不產生補課壓力。
+4. **Fold 優先。** 外螢幕適合快速查看與開始；展開後約 8 吋的螢幕適合閱讀、架構圖與情境題。需要電腦的任務必須提前標示。
+5. **本機資料優先。** 個人紀錄預設留在使用者裝置。跨裝置同步是日後可選功能。
+6. **遊戲化服務學習。** 經驗值、能力地圖、月曆與成就用來呈現真實進展，不獎勵沒有學習成果的操作。
+7. **可替換內容。** 領域知識放在主題範本，讓同一套引擎與介面能支援其他學科。
+8. **繁體中文優先。** 使用者介面、課程與文件預設使用台灣繁體中文。英文術語只能依教材原文的呈現方式保留。
 
-## Learning modes
+## 學習模式
 
-| Mode | Purpose |
+| 模式 | 用途 |
 | --- | --- |
-| Main Quest | Essential concepts with genuine dependencies. |
-| Side Quest | Timely or interest-led exploration such as MCP, Bedrock, or LangGraph. |
-| Debug Lab | Diagnose deliberate failure cases; record weak reasoning in the review queue. |
-| Client Challenge | Apply multiple skills to a realistic client decision. |
-| World Event | Time-sensitive industry developments, added without disturbing the core path. |
+| 主線任務 | 具備必要知識依賴的核心概念。 |
+| 支線任務 | 依工作需求、興趣或技術發展自由探索。 |
+| 除錯實驗室 | 診斷刻意設計的失敗案例，並把不精準的推理加入複習。 |
+| 客戶情境挑戰 | 綜合多項能力，完成真實顧問決策。 |
+| 產業事件 | 納入近期重要發展，不打亂核心學習路線。 |
 
-## Current scope (v0.1)
+## v0.1 範圍
 
-- Static GitHub Pages PWA
-- Local device progress: sessions, XP, completed missions, reflections, and review items
-- AI Consultant template with an initial mission map and reading-index fields
-- Responsive Fold-first dashboard and automatic Pages deployment
+- GitHub Pages 靜態漸進式網頁應用程式（PWA）
+- 儲存在本機裝置的學習時段、經驗值、完成任務、反思與複習項目
+- 包含初始任務地圖與閱讀索引欄位的 AI 顧問範本
+- 適合 Fold 的響應式介面與自動發布流程
 
-## Deferred deliberately
+## 暫緩項目
 
-- Account sign-in and cross-device sync
-- Uploading copyrighted learning material to the public repository
-- Automated AI-generated curriculum from uploads
-- A public portfolio or social sharing feature
+- 帳號登入與跨裝置同步
+- 把受版權保護的教材上傳到公開 Repository
+- 從上傳教材自動產生課綱
+- 公開作品集與社群分享
 
-## Decision history
+## 決策紀錄
 
-### v0.1 — 2026-07-22
+### v0.1，2026-07-22
 
-- Established Learning OS as a reusable core; AI Consultant Mastery is template one.
-- Chose a non-linear, adaptive mission model.
-- Chose Fold7 as the primary experience target.
-- Chose local-first data storage for the initial public scaffold.
+- 建立可重複使用的學習核心，並以 AI 顧問養成作為第一個範本。
+- 採用非線性、可調整的任務模型。
+- 將 Fold7 設為主要使用裝置。
+- 初始版本採用本機資料儲存。
+- 將台灣繁體中文設為預設內容語言，英文術語須經教材原文確認。
