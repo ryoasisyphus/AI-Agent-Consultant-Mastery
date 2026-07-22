@@ -1,5 +1,13 @@
 # 版本變更紀錄
 
+## 0.3.0，2026-07-22
+
+- 將 Mozilla PDF.js 固定於專案內，PDF 全程在瀏覽器處理，不需上傳教材。
+- 使用 IndexedDB 保存使用者選擇的 PDF 與逐頁文字，平台可直接顯示任務指定頁面內容。
+- 新增課程文字與 PDF 頁面切換、頁碼輸入、上一頁、下一頁及逐頁一鍵跳轉。
+- Google Drive 改為備用開啟方式，避免跨來源預覽器無法可靠跳到指定頁。
+- 新增 pull request 自動測試 workflow，正式站仍只由 `main` 部署。
+
 ## 0.2.5，2026-07-22
 
 - 將一次性教材來源從 URL query parameter 改為 fragment，避免檔案識別碼出現在 GitHub Pages HTTP 請求與存取紀錄。

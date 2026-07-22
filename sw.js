@@ -1,10 +1,13 @@
-const CACHE = "learning-os-v9-zh-tw-0.2.5";
+const CACHE = "learning-os-v10-zh-tw-0.3.0";
 const ASSETS = [
   "./index.html",
-  "./styles.css?v=0.2.5",
-  "./app.js?v=0.2.5",
-  "./manifest.webmanifest?v=0.2.5",
-  "./templates/ai-consultant/template.json?v=0.2.5",
+  "./styles.css?v=0.3.0",
+  "./pdf-reader.js?v=0.3.0",
+  "./app.js?v=0.3.0",
+  "./manifest.webmanifest?v=0.3.0",
+  "./templates/ai-consultant/template.json?v=0.3.0",
+  "./vendor/pdfjs/pdf.mjs",
+  "./vendor/pdfjs/pdf.worker.mjs",
   "./assets/icon-192.png",
   "./assets/icon-512.png"
 ];
@@ -37,5 +40,11 @@ self.addEventListener("fetch", (event) => {
     );
     return;
   }
-  event.respondWith(caches.match(event.request).then((cached) => cached || fetch(event.request)));
+  event.respondWith(caches.match(event.request).then((cached) => cached || fetch(event.request).then((response) => {
+    if (response.ok && new URL(event.request.url).origin === self.location.origin) {
+      const copy = response.clone();
+      caches.open(CACHE).then((cache) => cache.put(event.request, copy));
+    }
+    return response;
+  })));
 });

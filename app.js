@@ -102,10 +102,9 @@ function readerPanel(mission) {
   const fileId = loadReadingSource(template.id);
   const startPage = mission.reading.startPage || Number(String(mission.reading.pages).match(/\d+/)?.[0] || 1);
   const endPage = mission.reading.endPage || startPage;
-  const setup = `<details class="reader-source-control" ${fileId ? "" : "open"}><summary>${fileId ? "更換教材連結" : "設定私人 Google Drive PDF"}</summary><p>連結只保留在這台裝置的瀏覽器，不會寫入公開 Repository。</p><label>Google Drive PDF 連結<input id="readingSourceUrl" type="url" inputmode="url" autocomplete="url" placeholder="貼上 Google Drive PDF 共用連結" value="" /></label><button class="secondary" type="button" id="saveReadingSource">儲存教材連結</button><span class="field-error" id="readerSourceError" aria-live="polite"></span></details>`;
-  if (!fileId) return `<aside class="embedded-reader reader-empty"><div class="reader-heading"><span>原文閱讀</span><strong>第 ${startPage}–${endPage} 頁</strong></div><p>設定一次私人教材連結後，之後每個任務都會在這裡直接開啟指定閱讀區域。</p>${setup}</aside>`;
-  const src = `https://drive.google.com/file/d/${encodeURIComponent(fileId)}/preview#page=${startPage}`;
-  return `<aside class="embedded-reader"><div class="reader-heading"><div><span>原文閱讀</span><strong>${mission.reading.label}</strong></div><small>第 ${startPage}–${endPage} 頁</small></div><iframe class="pdf-reader" title="${escapeHtml(mission.reading.label)}，第 ${startPage} 至 ${endPage} 頁" src="${src}" loading="lazy" allow="fullscreen"></iframe><p class="reader-note">從第 ${startPage} 頁開始，閱讀到第 ${endPage} 頁。若未載入，請確認目前瀏覽器已登入有權限的 Google 帳號。</p>${setup}</aside>`;
+  const setup = `<details class="reader-source-control"><summary>${fileId ? "更換 Google Drive 備用連結" : "設定 Google Drive 備用連結"}</summary><p>本機 PDF 才能精準跳頁與顯示課程文字。Drive 連結只作為備用，且只保留在這台裝置。</p><label>Google Drive PDF 連結<input id="readingSourceUrl" type="url" inputmode="url" autocomplete="url" placeholder="貼上 Google Drive PDF 共用連結" value="" /></label><button class="secondary" type="button" id="saveReadingSource">儲存備用連結</button><span class="field-error" id="readerSourceError" aria-live="polite"></span></details>`;
+  const driveFallback = fileId ? `<a class="drive-fallback" href="https://drive.google.com/file/d/${encodeURIComponent(fileId)}/view" target="_blank" rel="noopener">在 Google Drive 開啟備用教材</a>` : "";
+  return `<aside class="embedded-reader" id="lessonReader"><div class="reader-heading"><div><span>課程閱讀</span><strong>${escapeHtml(mission.reading.label)}</strong></div><small>第 ${startPage}–${endPage} 頁</small></div><div class="reader-file-bar"><div><strong id="readerFileSummary">尚未選擇教材</strong><small>PDF 與擷取文字只保存於此瀏覽器的 IndexedDB</small></div><input id="readerFile" type="file" accept="application/pdf,.pdf" hidden /><button class="primary" type="button" id="chooseReaderFile">選擇教材 PDF</button><button class="secondary" type="button" id="replaceReaderFile" hidden>更換 PDF</button><button class="text-button danger" type="button" id="removeReaderFile" hidden>移除</button></div><div class="reader-tabs" role="group" aria-label="閱讀模式"><button type="button" data-reader-view="text" aria-pressed="true">課程文字</button><button type="button" data-reader-view="pdf" aria-pressed="false">PDF 頁面</button></div><div class="reader-status" id="readerStatus" role="status" aria-live="polite"></div><section class="reader-text-view" id="readerTextView"><div class="reader-text-content" id="readerTextContent"><p class="reader-placeholder">選擇一次教材 PDF 後，系統會直接整理第 ${startPage}–${endPage} 頁的文字。</p></div></section><section class="reader-pdf-view" id="readerPdfView" hidden><div class="pdf-controls"><button class="secondary" type="button" id="readerPrevious" aria-label="上一頁">上一頁</button><label>頁碼 <input id="readerPage" type="number" min="1" value="${startPage}" inputmode="numeric" /></label><button class="secondary" type="button" id="readerNext" aria-label="下一頁">下一頁</button></div><div class="pdf-canvas-wrap"><canvas id="readerCanvas" aria-label="PDF 第 ${startPage} 頁"></canvas></div></section><div class="reader-support">${driveFallback}${setup}</div></aside>`;
 }
 
 function bindReadingSource(mission) {
@@ -114,6 +113,11 @@ function bindReadingSource(mission) {
     if (!fileId) { $("#readerSourceError").textContent = "請貼上 Google Drive PDF 的共用連結。"; return; }
     saveReadingSource(template.id, fileId);
     openMission(mission.id);
+  });
+  window.LearningPdfReader?.mount({
+    templateId: template.id,
+    startPage: mission.reading.startPage,
+    endPage: mission.reading.endPage
   });
 }
 
@@ -186,7 +190,7 @@ function setMotionPreference(reduced) {
 
 async function init() {
   try {
-    template = await fetch("templates/ai-consultant/template.json?v=0.2.5").then((response) => {
+    template = await fetch("templates/ai-consultant/template.json?v=0.3.0").then((response) => {
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       return response.json();
     });
@@ -217,7 +221,7 @@ async function init() {
       reloading = true;
       window.location.reload();
     });
-    navigator.serviceWorker.register("./sw.js?v=0.2.5", { updateViaCache: "none" });
+    navigator.serviceWorker.register("./sw.js?v=0.3.0", { updateViaCache: "none" });
   }
 }
 init();
